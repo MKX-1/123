@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">123</div>
+    <script type="module">
+        import { reactive, effect, computed } from './reactivity.esm.js'
+        const state = reactive({
+            name:'jw',
+            age: 18,
+            flag: false,
+            n:{n:1}
+        })
+        //计算属性是根据状态衍生属性，并希望这个属性具有缓存功能，如果依赖的数据不变就不会重新计算
+        //计算属性内部需要一个变量，它控制着computed是否要重新执行，默认状态下dirty的值为true，此时会执行附带的方法，拿到返回结果并缓存，dirty再变为false
+        //当再次取值因为dirty是false，所以直接拿缓存的结果
+        //如果依赖的值发生变化，会再次更新dirty变为true，在取值的时候会执行，拿到新值   
+        let aliasName = computed({
+            get(){
+                console.log('aliasName get');
+                return '*'+state.name;
+            },
+            set(newVal){
+                //设置计算属性的值时，需要更新原始值
+            }
+        });
+    </script>
+</body>
+</html>

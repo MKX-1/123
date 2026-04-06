@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">123</div>
+    <script type="module">
+        import { reactive, effect, computed,watch } from './reactivity.esm.js'
+        const state = reactive({
+            name:'jw',
+            age: 18,
+            flag: false,
+            n:{n:1}
+        })
+        //数据变化后调用回调方法，
+        //watch也是effect，状态会收集依赖，属性变化之后调用后边的函数也就是scheduler
+        watch(()=>state.name,(newVal,oldVal)=>{
+            console.log(newVal,oldVal);
+        })
+        state.name = 'jw2';
+        console.log(state.name);
+    </script>
+</body>
+</html>
